@@ -4,7 +4,7 @@
     "caption2" : "Tokyo 16th December 2017: archery, checkers, poker, volleyball",
     "competitions" : {
       "Poker" : {
-        "L_27856_01_2014" : {
+        "A_77777_99_1111" : {
           "name1" : "John",
           "name2" : "Smith",
           "org" : "FC Footkick",
@@ -12,7 +12,7 @@
         }
       },
       "Volleyball" : {
-        "L_27856_01_2014" : {
+        "B_77777_99_1111" : {
           "name1" : "George",
           "name2" : "Constanza",
           "org" : "VC Sandy Hands",
@@ -20,7 +20,7 @@
         }
       },
       "Archery" : {
-        "L_27856_01_2014" : {
+        "C_77777_99_1111" : {
           "name1" : "Will",
           "name2" : "Tell",
           "org" : "AC Geneva",
@@ -28,7 +28,7 @@
         }
       },
       "Checkers" : {
-        "L_27856_01_2014" : {
+        "D_77777_99_1111" : {
           "name1" : "Thomas",
           "name2" : "Brown",
           "org" : "CC Chelsea",
