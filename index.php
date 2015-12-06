@@ -1,6 +1,6 @@
 <?
-$startDate = "2015-11-26";
-$endDate = "2015-12-04";
+$startDate = "2014-03-06";
+$endDate = "2018-12-04";
 $date = date("Y-m-d");
 
 if ($date >= $startDate && $date < $endDate) {
