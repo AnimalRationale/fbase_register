@@ -1,0 +1,200 @@
+html {
+    overflow: -moz-scrollbars-vertical;
+    background-color: #000;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    margin: 0 auto;
+    min-height: 100%;
+}
+
+
+body {
+    height: 100%;
+    background-color: #000;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    margin: 0 auto;
+}
+
+#outer {
+    display: block;
+    position: relative;
+    width: 760px;
+    text-align: center;
+    padding: 0px 0px 0px 0px;
+    margin: 0 auto;
+    height:100%;
+    min-height:100%;
+    background-color: #000;
+}
+
+html,body{height:100%}
+html>body #outer{height:auto}
+html>body #outer{height:auto; min-height:100%;}
+
+#top {
+    width: 760px;
+    height: 240px;
+    padding: 0px 0px 5px 0px;
+    position:relative;
+    text-align: left;
+    margin: 0 auto;
+    background-color: #000;
+}
+
+#content {
+    height: auto !important;
+    display: block;
+    position: relative;
+    width: 760px;
+    padding: 0px 0px 0px 0px;
+    text-align: left;
+    margin: 0 auto;
+    overflow: hidden;
+    background-color: #000;
+    font-family: Arial,Verdana,Helvetica,sans-serif;
+    font-size: 14px;
+    line-height: 140%;
+}
+
+#content a:link  {
+    background: none;
+    color: #ffbf00;
+    font-size: 14px;
+    font-family: Arial, Verdana, Helvetica, sans-serif;
+    text-decoration: none
+}
+
+#content a:active  {background: none;
+    color: #ffbf00;
+    font-size: 14px;
+    font-family: Arial, Verdana, Helvetica, sans-serif;
+    text-decoration: none
+}
+
+#content a:visited {
+    background: none;
+    color: #ffbf00;
+    font-size: 14px;
+    font-family: Arial, Verdana, Helvetica, sans-serif;
+    text-decoration: none
+}
+
+#content a:hover {background: #ffbf00;
+    color: #000000;
+    font-size: 14px;
+    font-family: Arial, Verdana, Helvetica, sans-serif;
+    text-decoration: none
+}
+
+div.center {
+    text-align: center;
+}
+
+div.right {
+    text-align: right;
+}
+
+td.tab-blue1 {
+    padding: 0px 5px 8px 0px;
+    text-align: right;
+    color: #0088ff;
+    background: #333;
+    text-transform: uppercase;
+    width: 10%;
+    text-align: left;
+}
+
+tr.tab-competition1 {
+    text-align: right;
+    background: #101010;
+}
+
+tr.tab-competition1g {
+    text-align: right;
+    background: #151515;
+}
+
+.registered {
+    font-size: 16px;
+}
+
+.max-participants {
+    color: #99FFCC;
+    font-size: 12px;
+    text-align: left;
+}
+
+.registeredCol1 {
+    text-align: right;
+    color: darkslategrey;
+}
+
+.registeredCol2 {
+    text-align: left;
+    color: #ffffff;
+    width: 55%;
+}
+
+.registeredCol3 {
+    text-align: left;
+    color: beige;
+    font-size: 14px;
+}
+
+#registerForm {
+    font-size: 16px;
+    color: orange;
+}
+
+#competitionsTable {
+    color: orangered;
+}
+
+.caption1 {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    background-color: #C30000;
+    padding: 5px;
+}
+
+.caption2 {
+    text-align: center;
+    font-size: 16px;
+    color: #FF9922;
+    background-color: #000000;
+    padding: 5px;
+}
+
+.caption3 {
+    text-align: center;
+    font-size: 18px;
+    color: #ffffff;
+    background-color: #000000;
+    padding: 2px;
+    text-transform: uppercase;
+}
+
+td.tab-competition1, td.tab-competition1g {
+    padding: 8px 5px 8px 0px;
+    text-align: right;
+    border: none;
+}
+
+td.tab-competition2, td.tab-competition2g {
+    padding: 8px 5px 8px 0px;
+    text-align: left;
+}
+
+td.tab-competition1g, td.tab-competition2g {
+    backgorund: #333;
+}
+
+.tab-competition3 {
+    color: #a0a0a0;
+}

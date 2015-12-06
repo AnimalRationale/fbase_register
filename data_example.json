@@ -1,0 +1,48 @@
+{
+  "Tournament" : {
+    "caption1" : "The Great Tournament of Almost All Sports",
+    "caption2" : "Tokyo 16th December 2017: archery, checkers, poker, volleyball",
+    "competitions" : {
+      "Poker" : {
+        "L_27856_01_2014" : {
+          "name1" : "John",
+          "name2" : "Smith",
+          "org" : "FC Footkick",
+          "year" : "1994"
+        }
+      },
+      "Volleyball" : {
+        "L_27856_01_2014" : {
+          "name1" : "George",
+          "name2" : "Constanza",
+          "org" : "VC Sandy Hands",
+          "year" : "1984"
+        }
+      },
+      "Archery" : {
+        "L_27856_01_2014" : {
+          "name1" : "Will",
+          "name2" : "Tell",
+          "org" : "AC Geneva",
+          "year" : "1979"
+        }
+      },
+      "Checkers" : {
+        "L_27856_01_2014" : {
+          "name1" : "Thomas",
+          "name2" : "Brown",
+          "org" : "CC Chelsea",
+          "year" : "1981"
+        }
+      }
+    },
+    "d_day" : 16,
+    "d_month" : 12,
+    "d_year" : 2017,
+    "hour" : "10:00",
+    "Poker" : 4,
+    "Checkers" : 2,
+    "Volleyball" : 10,
+    "Archery" : 2
+  }
+}

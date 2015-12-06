@@ -1,0 +1,296 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title>Firebase event register</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta http-equiv="Content-Language" content="en">
+        <script src="https://cdn.firebase.com/v0/firebase.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="main.css">
+    </head>
+    <body>
+        <div id="outer">
+
+                <div id="content">
+                <br><br>
+                <div id="caption1">Loading data...</div>
+                <div id="loaderImg"><img src="load-01.gif"></div>
+                <div id="caption2"></div>
+                <br>
+                <div id="caption3"></div>
+                <div id="registeredLists">
+                </div>
+                <table id="registeredTable"></table>
+                <br><br>
+                <hr color = #333>
+                <form id="registerForm" action="javascript:alert( 'Error!' );">
+                    <div class="right">
+                        <span id="arrowName1"><strong>&#10140; </strong></span><span id="name1">First name: </span><input type="text" id="name1Input" placeholder="First name" required><br>
+                        <span id="arrowName2"><strong>&#10140; </strong></span><span id="name2">Last name: </span><input type="text" id="name2Input" placeholder="Last name" required><br>
+                        <span id="arrowOrg"><strong>&#10140; </strong></span><span id="org">Club: </span><input type="text" id="clubInput" placeholder="Club" required><br>
+                        <span id="arrowYear"><strong>&#10140; </strong></span><span id="year">Year of birth: </span><input type="text" id="yearInput" placeholder="Year of birth" required><br>
+                        <span id="arrowLic"><strong>&#10140; </strong></span><span id="licenceNumber">License number: </span><input type="text" id="License number" placeholder="A" maxlength="1" size="1" required>-
+                        <input type="text" id="lic2Input" placeholder="12345" maxlength="5" size="5" required>/
+                        <input type="text" id="lic3Input" placeholder="12" maxlength="2" size="2" required>/
+                        <input type="text" id="lic4Input" placeholder="1234" maxlength="4" size="4" required>
+                        <br><br>
+                        <span id="arrowCB"><strong>&#10140; </strong></span><span id="competitionBoxes">Available competitions:</span><br>
+                        <table id="competitionsTable" cellpadding = "2" cellspacing = "0"></table>
+                        <br><br><br>
+                        <input id="submitBtn" type="submit" value="Register"><br>
+                    </div>
+                </form>
+
+
+                    <script>
+                        var fbLink = 'https://radiant-torch-8631.firebaseio.com/Tournament';
+                        var compLink = fbLink + '/competitions';
+                        var compArr = new Array();
+                        var checkBoxArr = new Array();
+
+                        function makeDate(d, m, y, s)
+                        {
+                            var day, month, year, fullDate;
+                            if (d < 10) {day = " 0" + d + s} else {day = " " + d + s}
+                            if (m > 9) {month = "" + m  + s} else {month = "0" + m + s}
+                            year = "" + y;
+                            fullDate = day + month + year;
+                            return fullDate;
+                        }
+
+                        function createTable(comp){
+
+                            var mytable = $('<table></table>').attr({ id: "registeredFor" + comp, class: "registered", width: "100%", cellpadding: 5, cellspacing: 0 } );
+                            var rows = 1;
+                            var cols = 4;
+                            var tr = [];
+                            for (var i = 0; i < rows; i++) {
+                                var row = $('<tr></tr>').attr({ class: ["class1", "class2", "class3"].join(' ') }).appendTo(mytable);
+                                $('<td></td>').text("").appendTo(row);
+                            }
+                            mytable.appendTo("#registeredLists");
+                        }
+
+                        function getMaxParticipants(comp)
+                        {
+                            var max = 0;
+                            regTournament.child(comp).once('value', function(ss) {
+                                max = ss.val();
+                            });
+                            return max;
+                        }
+
+                        function showCompetitionsLists(comp)
+                        {
+                            var i = 1;
+                            var row = "";
+                            var compSpecLink = "";
+                            compSpecLink =  compLink + "/" + comp;
+                            var regCompList = new Firebase(compSpecLink);
+                            createTable(comp);
+                            row = "<tr class='tab-competition1g'><td class='tab-blue1' ><em> " + comp + ":</em></td><td class='max-participants'>max. participants: " + getMaxParticipants(comp) + "</td><td></td><td></td><td></td></tr>";
+                            $("#registeredFor" + comp).append(row);
+                            regCompList.on('child_added', function(snapshot) {
+                                var regData = snapshot.val();
+                                row = "<tr><td class='registeredCol1'> " + i + ".</td><td class='registeredCol2'>" + regData.name1 + " " + regData.name2 + " &nbsp;&nbsp;</td><td class='registeredCol3'>" + regData.org + " </td><td class='registeredCol3'>&nbsp;" + regData.year + "</td></tr>";
+                                i++;
+                                $("#registeredFor" + comp).append(row);
+                                if (i - 1 >= getMaxParticipants(comp)) {
+                                    var checkBoxIndex = $.inArray( comp, compArr );
+                                    $("#cbox0" + checkBoxIndex).hide();
+                                }
+                            });
+                            regCompList.on('child_removed', function(snapshot) {
+                                window.location.reload(true);
+                            });
+                            if (i - 1 < getMaxParticipants(comp)) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }
+
+                        function competitions()
+                        {
+                            var regCompetitions = new Firebase(compLink);
+                            var i = 1;
+                            regCompetitions.on('child_added', function(snapshot) {
+                                var regData = snapshot.val();
+                                compArr[i] = snapshot.name();
+                                checkBoxArr[i] = "#cbox0" + i;
+                                var row = "<tr class='tab-zawody1g'><td></td><td>" + snapshot.name() + " </td><td><input type='checkbox' id='cbox0" + i + "'></td></tr>";
+                                i++;
+                                if (showCompetitionsLists(snapshot.name())) {
+                                    $("#competitionsTable").append(row);
+                                }
+                            });
+                            regCompetitions.on('child_removed', function(snapshot) {
+                                window.location.reload(true);
+                            });
+                        }
+
+                        function showError (arrow) {
+                            $(arrow).css('color', '#C30000');
+                            $(arrow).show().fadeOut( 3000 );
+//            $(elem).css('color', '#C30000');
+                        }
+
+                        function validateForm() {
+                            var atLeastOneIsChecked = $('#registerForm :checkbox:checked').length > 0;
+                            if (!atLeastOneIsChecked) {
+                                showError("#arrowCB")
+                                return false;
+                            } else {
+                                var name1 = $('#name1Input').val();
+                                if (name1 == "" || name1 == null) {
+                                    showError("#arrowName1");
+                                    return false
+                                }
+                                var name2 = $('#name2Input').val();
+                                if (name2 == "" || name2 == null) {
+                                    showError("#arrowName2");
+                                    return false
+                                }
+
+                                var year = $('#yearInput').val();
+                                if (year == "" || year == null) {
+                                    showError("#arrowYear");
+                                    return false
+                                }
+                                if (year.length != 4) {
+                                    showError("#arrowYear");
+                                    return false
+                                }
+                                if (isNaN(Number(year))) {
+                                    showError("#arrowYear");
+                                    return false
+                                }
+                                if ( Number(year) < 1920 ||  Number(year) > (2015-17)) {
+                                    showError("#arrowYear");
+                                    return false
+                                }
+
+                                var org = $('#clubInput').val();
+                                if (org == "" || org == null) {
+                                    showError("#arrowOrg");
+                                    return false
+                                }
+
+                                var lic1 = $('#lic1Input').val();
+                                if (lic1 == "") {
+                                    showError("#arrowLic");
+                                    console.log("lic1");
+                                    return false
+                                }
+                                var lic2 = $('#lic2Input').val();
+                                if (lic2.length != 5) {
+                                    showError("#arrowLic");
+                                    console.log("lic2a");
+                                    return false
+                                }
+                                if (isNaN(Number(lic2))) {
+                                    showError("#arrowLic");
+                                    console.log("lic2b");
+                                    return false
+                                }
+                                if ( Number(lic2) < 0) {
+                                    showError("#arrowLic");
+                                    console.log("lic2c");
+                                    return false
+                                }
+
+                                var lic3 = $('#lic3Input').val();
+                                if (lic3.length != 2) {
+                                    showError("#arrowLic");
+                                    return false
+                                }
+                                if (isNaN(Number(lic3))) {
+                                    showError("#arrowLic");
+                                    return false
+                                }
+                                if ( Number(lic3) < 1 ||  Number(lic3) > 99) {
+                                    showError("#arrowLic");
+                                    return false
+                                }
+
+                                var lic4 = $('#lic4Input').val();
+                                if (lic4.length != 4) {
+                                    showError("#arrowLic");
+                                    return false
+                                }
+                                if (isNaN(Number(lic4))) {
+                                    showError("#arrowLic");
+                                    return false
+                                }
+                                if ( Number(lic4) < 0000 ||  Number(lic4) > 9999) {
+                                    showError("#arrowLic");
+                                    return false
+                                }
+
+                                return true;
+                            }
+                        }
+
+                        var regTournament = new Firebase(fbLink);
+                        regTournament.on('value', function(snapshot) {
+                            if(snapshot.val() === null) {
+                                alert('No data!');
+                            } else {
+                                var cap1 = snapshot.val().caption1;
+                                var cap2 = snapshot.val().caption2;
+                                var d = snapshot.val().d_day;
+                                var m = snapshot.val().d_month;
+                                var y = snapshot.val().d_year;
+                                var h = snapshot.val().hour;
+                                $("#loaderImg").hide();
+                                $("#caption1").text(cap1 + makeDate(d, m, y, "."));
+                                $("#caption1").attr({class: "caption1"});
+                                // $("#caption1").css('background-color','#C30000');
+                                $("#caption2").text(cap2);
+                                $("#caption2").attr({class: "caption2"});
+                                $("#caption3").text("Registration");
+                                $("#caption3").attr({class: "caption3"});
+                            }
+                        });
+
+                        $("#arrowCB").hide();
+                        $("#arrowLic").hide();
+                        $("#arrowName1").hide();
+                        $("#arrowName2").hide();
+                        $("#arrowOrg").hide();
+                        $("#arrowYear").hide();
+
+                        competitions();
+                        $("#competitionsTable").css('float', 'right');
+
+                        $("#registerForm").submit(function( event ) {
+
+                            if (validateForm()) {
+                                $("#competitionBoxes").css('color', 'Yellow');
+                                event.preventDefault();
+
+                                var license = $('#lic1Input').val() + "_" + $('#lic2Input').val() + "_" + $('#lic3Input').val() + "_" + $('#lic4Input').val();
+                                var name1 = $('#name1Input').val();
+                                var name2 = $('#name2Input').val();
+                                var org = $('#clubInput').val();
+                                var year = $('#yearInput').val();
+
+                                for (var i = 1; i < checkBoxArr.length; i++)
+                                {
+                                    if ($(checkBoxArr[i]).is(":checked"))
+                                    {
+                                        var regCompetitions = new Firebase(compLink + "/" + compArr[i]);
+                                        regCompetitions.child(license).set({name1: name1, name2: name2, org: org, year: year});
+                                    }
+                                }
+                                window.location.reload(true);
+                                return;
+                            }
+                            event.preventDefault();
+                        });
+
+                    </script>
+                </div>
+        </div>
+    </body>
+</html>
